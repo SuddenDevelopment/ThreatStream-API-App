@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="appMain">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="./lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Exo+2">
+    <link rel="stylesheet" href="./css/index.css" type="text/css">
+    <style type="text/css">
+      [ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak {display: none !important;}
+      .active{ background-color: #29b6f6; }
+      .rowData{ min-height:32px; border-bottom:1px solid #666;}
+      .rowData div{ padding:6px; }
+      .colRecords{ text-align:right; width:50px; }
+      .colDate{ width:100px; }
+      #navbar{ height:40px; padding:8px; background:#222; border-bottom: 1px solid #111;}
+      .bigNumber{ font-size: 48px }
+      .btnSingle{ border:1px solid #666; border-radius:3px; cursor:pointer; padding:6px; }
+      md-menu-content{ background:#333; }
+      md-menu-content input, select{ background:#222; border:1px solid #444; color:#ddd; padding:3px; margin-left:6px; }
+    </style>
+  </head>
+  <body ng-controller='controllerMain' ng-cloak>
+  <div id="navbar" layout="row" layout-align="space-between center">
+    <div layout="row">
+      <div>Report: </div>
+      <select ng-model="tmp.report">
+        <option value="orgs">Org Counts</option>
+      </select>
+    </div>
+    <div layout="row">
+      <div>Days: </div>
+      <select ng-model="tmp.days">
+        <option value="2">2 days</option>
+        <option value="7">7 days</option>
+        <option value="14">14 days</option>
+        <option value="30">30 days</option>
+      </select>
+    </div>
+    <div layout="row" class="btnSingle" ng-click="fnReport()">
+      Go
+    </div>
+    <md-menu>
+      <div ng-click="$mdMenu.open()"><i class="fa fa-cog"></i> Settings</div>
+      <md-menu-content width="8" style="overflow:hidden;" layout-padding>
+          <div layout="row" layout-align="space-between">
+            <div>Username: </div>
+            <input ng-model="tmp.username">
+          </div>
+          <div layout="row" layout-align="space-between">
+            <div>API key: </div>
+            <input ng-model="tmp.key">
+          </div>
+      </md-menu-content>
+    </md-menu>
+  </div>
+  <div ng-if="info.loaded > 0" layout="row" layout-align="space-around">
+    <div ng-repeat="(k,v) in data.summary[0]">
+      <div layout="column" flex>
+        <div class="bigNumber"> {{v}} </div>
+        <div class=""> {{k}} </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <md-content layout-fill layout="column">
+  <div class="rowData" ng-repeat="objRow in data.orgs" layout="row">
+    <div class="colDate">{{objRow.created_date}}</div>
+    <div flex>{{objRow.org}}</div>
+    <div class="colRecords">{{objRow.records}}</div>
+  </div>
+
+  </md-content>
+  </body>
+    <!-- pre requisites -->
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+  <script src="../node_modules/angular-aria/angular-aria.min.js"></script>
+  <script src="../node_modules/angular-material/angular-material.min.js"></script>
+  <script src="../node_modules/alasql/dist/alasql.fs.js"></script>
+  <!-- visualization libs -->
+  <script src="../node_modules/cytoscape/dist/cytoscape.min.js"></script>
+  <script src="../node_modules/cytoscape-cola/cola.js"></script>  
+  <script src="../node_modules/cytoscape-cola/cytoscape-cola.js"></script>  
+  <!-- directives -->
+  <!-- logic -->
+  <script src="./js/index.js"></script>
+</html>
